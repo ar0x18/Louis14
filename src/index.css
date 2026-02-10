@@ -11,6 +11,7 @@
   --text-muted: #4a4a4a;
   --font-title: 'Cormorant Garamond', Georgia, serif;
   --font-body: 'Source Sans 3', system-ui, sans-serif;
+  --font-script: 'Segoe Script', 'Comic Sans MS', system-ui;
   --max-width: 42rem;
   --space-section: 4rem;
   --radius: 0.5rem;
@@ -92,6 +93,61 @@ body::after {
 
 .skip-link--2 { left: 10rem; }
 .skip-link--3 { left: 22rem; }
+
+/* ----- Cœurs volants à l'ouverture ----- */
+.hearts-flying {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.hearts-flying__heart {
+  position: absolute;
+  bottom: -10%;
+  transform: translateX(-50%);
+  color: var(--accent);
+  opacity: 0.9;
+  filter: drop-shadow(0 0 6px var(--accent-sharp-soft));
+  animation: hearts-fly-up 6s var(--ease-out) forwards;
+}
+
+.hearts-flying__heart--sharp {
+  color: var(--accent-sharp);
+}
+
+.hearts-flying__heart--soft {
+  color: var(--accent);
+}
+
+.hearts-flying__heart svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes hearts-fly-up {
+  from {
+    opacity: 0.7;
+    transform: translateX(-50%) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-110vh);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hearts-flying__heart {
+    animation: none;
+    opacity: 0.35;
+    transform: translateX(-50%) translateY(-20vh);
+  }
+}
 
 /* Ancres : évite que le contenu soit caché sous la barre après skip (guidelines) */
 #main,
@@ -199,6 +255,251 @@ body::after {
 .hero__closing {
   font-style: italic;
   margin-bottom: 0;
+}
+
+/* Enveloppe interactive qui révèle la lettre — mobile-first */
+.hero__envelope {
+  position: relative;
+  margin-top: 1.75rem;
+  width: 100%;
+  min-height: 20rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+  .hero__envelope {
+    min-height: 24rem;
+  }
+}
+
+.envelope {
+  position: relative;
+  width: min(18rem, 80vw);
+  height: 11rem;
+  margin-top: auto;
+  flex-shrink: 0;
+  border-radius: 0.9rem;
+  background: linear-gradient(135deg, #f7e5ea, #fdf7f8);
+  border: 1px solid var(--accent-soft);
+  box-shadow: 0 10px 26px rgba(184, 92, 108, 0.18), var(--shadow-glow);
+  cursor: pointer;
+  user-select: none;
+  perspective: 900px;
+  transform-style: preserve-3d;
+  overflow: hidden;
+}
+
+.envelope__body {
+  position: absolute;
+  inset: 0.9rem 0.8rem 0.7rem;
+  border-radius: 0.7rem;
+  background: var(--bg-card);
+  border: 1px solid var(--accent-soft);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.envelope__flap {
+  position: absolute;
+  left: 0.8rem;
+  right: 0.8rem;
+  top: 0.15rem;
+  height: 3.9rem;
+  background: linear-gradient(135deg, #f3d5dd, #f9e4ea);
+  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+  transform-origin: bottom center;
+  transform: rotateX(0deg);
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 10px rgba(136, 52, 72, 0.16);
+  transition: transform 0.6s var(--ease-out);
+}
+
+.envelope--opening .envelope__flap,
+.envelope--unfolded .envelope__flap,
+.envelope--reading .envelope__flap {
+  transform: rotateX(-180deg);
+}
+
+.envelope__prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 0.6rem;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.envelope--opening .envelope__prompt,
+.envelope--unfolded .envelope__prompt,
+.envelope--reading .envelope__prompt {
+  opacity: 0;
+  transform: translate(-50%, 4px);
+}
+
+@media (max-width: 480px) {
+  .envelope {
+    width: min(16.5rem, 88vw);
+    height: 10rem;
+  }
+}
+
+/* Lettre d'amour sur carte — mobile-first, plus large sur desktop */
+.hero__letter {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.35rem 1.2rem;
+  max-width: min(42rem, 92vw);
+  width: 100%;
+  background: linear-gradient(135deg, #fffdfb, var(--bg-card));
+  border-radius: 0.9rem;
+  border: 1px solid var(--accent-soft);
+  box-shadow: 0 10px 30px rgba(184, 92, 108, 0.17), var(--shadow-glow);
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+@media (min-width: 640px) {
+  .hero__letter {
+    padding: 1.5rem 1.75rem 1.4rem;
+    max-width: min(var(--max-width), 94vw);
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero__letter {
+    max-width: var(--max-width);
+  }
+}
+
+@media (min-width: 768px) {
+  .hero__letter {
+    padding: 1.75rem 1.9rem 1.6rem;
+  }
+}
+
+/* Lettre issue de l'enveloppe : invisible tant qu'on n'a pas ouvert */
+.hero__letter--from-envelope {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.65);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.8s var(--ease-out), opacity 0.5s var(--ease-out), visibility 0s linear 0.5s;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hero__envelope--closed .hero__letter--from-envelope,
+.hero__envelope--opening .hero__letter--from-envelope {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.hero__envelope--unfolded .hero__letter--from-envelope,
+.hero__envelope--reading .hero__letter--from-envelope {
+  top: 0;
+  transform: translate(-50%, 0) scale(1);
+  opacity: 1;
+  visibility: visible;
+  transition: transform 0.8s var(--ease-out), opacity 0.5s var(--ease-out), visibility 0s linear 0s;
+  pointer-events: auto;
+}
+
+.hero__letter::before {
+  content: '';
+  position: absolute;
+  inset: 0.35rem 0.4rem;
+  border-radius: 0.7rem;
+  border: 1px dashed var(--accent-line);
+  pointer-events: none;
+}
+
+.hero__letter-text {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-script);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: #3e2529;
+  white-space: normal;
+}
+
+.hero__letter-line {
+  display: block;
+  opacity: 0;
+  transform: translateY(0.35rem);
+  will-change: opacity, transform;
+  animation: none;
+}
+
+.hero__letter-line--empty {
+  line-height: 1.4;
+}
+
+/* Délais progressifs pour l'apparition ligne par ligne (un peu plus lents) */
+.hero__letter--reading .hero__letter-line {
+  animation: hero-letter-line-in 0.7s var(--ease-out) forwards;
+}
+.hero__letter--reading .hero__letter-line:nth-child(1) { animation-delay: 0.6s; }
+.hero__letter--reading .hero__letter-line:nth-child(2) { animation-delay: 1.2s; }
+.hero__letter--reading .hero__letter-line:nth-child(3) { animation-delay: 1.8s; }
+.hero__letter--reading .hero__letter-line:nth-child(4) { animation-delay: 2.4s; }
+.hero__letter--reading .hero__letter-line:nth-child(5) { animation-delay: 3s; }
+.hero__letter--reading .hero__letter-line:nth-child(6) { animation-delay: 3.6s; }
+.hero__letter--reading .hero__letter-line:nth-child(7) { animation-delay: 4.2s; }
+.hero__letter--reading .hero__letter-line:nth-child(8) { animation-delay: 4.8s; }
+.hero__letter--reading .hero__letter-line:nth-child(9) { animation-delay: 5.4s; }
+.hero__letter--reading .hero__letter-line:nth-child(10) { animation-delay: 6s; }
+.hero__letter--reading .hero__letter-line:nth-child(11) { animation-delay: 6.6s; }
+.hero__letter--reading .hero__letter-line:nth-child(12) { animation-delay: 7.2s; }
+.hero__letter--reading .hero__letter-line:nth-child(13) { animation-delay: 7.8s; }
+.hero__letter--reading .hero__letter-line:nth-child(14) { animation-delay: 8.4s; }
+.hero__letter--reading .hero__letter-line:nth-child(15) { animation-delay: 9s; }
+
+@keyframes hero-letter-line-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__envelope {
+    display: none;
+  }
+
+  .hero__letter-line {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+.hero__letter-signature {
+  position: relative;
+  z-index: 1;
+  margin: 0.25rem 0 0;
+  align-self: flex-end;
+  font-family: var(--font-title);
+  font-size: 1rem;
+  color: var(--accent-sharp);
 }
 
 /* ----- Reveal (fade-in au scroll) + stagger enfants ----- */

@@ -1,11 +1,13 @@
-import Countdown from './components/Countdown'
-import Hero from './components/Hero'
-import Menu from './components/Menu'
-import Reveal from './components/Reveal'
+import Countdown from "./components/Countdown";
+import HeartsFlying from "./components/HeartsFlying";
+import Hero from "./components/Hero";
+import Menu from "./components/Menu";
+import Reveal from "./components/Reveal";
 
 export default function App() {
   return (
     <>
+      <HeartsFlying />
       <a href="#main" className="skip-link">
         Aller au contenu
       </a>
@@ -17,9 +19,13 @@ export default function App() {
       </a>
       <main className="app" id="main">
         <Hero />
-        <Reveal stagger><Countdown /></Reveal>
-        <Reveal stagger><Menu /></Reveal>
+        <Reveal stagger>
+          <Countdown />
+        </Reveal>
+        <Reveal stagger>
+          <Menu />
+        </Reveal>
       </main>
     </>
-  )
+  );
 }
