@@ -11,7 +11,7 @@
   --text-muted: #4a4a4a;
   --font-title: 'Cormorant Garamond', Georgia, serif;
   --font-body: 'Source Sans 3', system-ui, sans-serif;
-  --font-script: 'Segoe Script', 'Comic Sans MS', system-ui;
+  --font-script: 'Petit Formal Script', 'Segoe Script', cursive;
   --max-width: 42rem;
   --space-section: 4rem;
   --radius: 0.5rem;
@@ -107,18 +107,9 @@ body::after {
   position: absolute;
   bottom: -10%;
   transform: translateX(-50%);
-  color: var(--accent);
-  opacity: 0.9;
-  filter: drop-shadow(0 0 6px var(--accent-sharp-soft));
+  opacity: 0.92;
+  filter: drop-shadow(0 0 6px rgba(184, 92, 108, 0.2));
   animation: hearts-fly-up 6s var(--ease-out) forwards;
-}
-
-.hearts-flying__heart--sharp {
-  color: var(--accent-sharp);
-}
-
-.hearts-flying__heart--soft {
-  color: var(--accent);
 }
 
 .hearts-flying__heart svg {
@@ -257,217 +248,413 @@ body::after {
   margin-bottom: 0;
 }
 
-/* Enveloppe interactive qui révèle la lettre — mobile-first */
-.hero__envelope {
-  position: relative;
-  margin-top: 1.75rem;
-  width: 100%;
-  min-height: 20rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-x: hidden;
-}
-
-@media (min-width: 768px) {
-  .hero__envelope {
-    min-height: 24rem;
-  }
-}
-
-.envelope {
-  position: relative;
-  width: min(18rem, 80vw);
-  height: 11rem;
-  margin-top: auto;
-  flex-shrink: 0;
-  border-radius: 0.9rem;
-  background: linear-gradient(135deg, #f7e5ea, #fdf7f8);
-  border: 1px solid var(--accent-soft);
-  box-shadow: 0 10px 26px rgba(184, 92, 108, 0.18), var(--shadow-glow);
-  cursor: pointer;
-  user-select: none;
-  perspective: 900px;
-  transform-style: preserve-3d;
-  overflow: hidden;
-}
-
-.envelope__body {
-  position: absolute;
-  inset: 0.9rem 0.8rem 0.7rem;
-  border-radius: 0.7rem;
-  background: var(--bg-card);
-  border: 1px solid var(--accent-soft);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
-}
-
-.envelope__flap {
-  position: absolute;
-  left: 0.8rem;
-  right: 0.8rem;
-  top: 0.15rem;
-  height: 3.9rem;
-  background: linear-gradient(135deg, #f3d5dd, #f9e4ea);
-  clip-path: polygon(0 100%, 50% 0, 100% 100%);
-  transform-origin: bottom center;
-  transform: rotateX(0deg);
-  transform-style: preserve-3d;
-  box-shadow: 0 4px 10px rgba(136, 52, 72, 0.16);
-  transition: transform 0.6s var(--ease-out);
-}
-
-.envelope--opening .envelope__flap,
-.envelope--unfolded .envelope__flap,
-.envelope--reading .envelope__flap {
-  transform: rotateX(-180deg);
-}
-
-.envelope__prompt {
-  position: absolute;
-  left: 50%;
-  bottom: 0.6rem;
-  transform: translateX(-50%);
-  font-size: 0.8rem;
+.hero__note {
+  margin: 1.25rem auto 0;
+  max-width: 36ch;
+  font-size: 1rem;
+  line-height: 1.7;
   color: var(--text-muted);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  pointer-events: none;
-  opacity: 1;
-  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
-}
-
-.envelope--opening .envelope__prompt,
-.envelope--unfolded .envelope__prompt,
-.envelope--reading .envelope__prompt {
-  opacity: 0;
-  transform: translate(-50%, 4px);
-}
-
-@media (max-width: 480px) {
-  .envelope {
-    width: min(16.5rem, 88vw);
-    height: 10rem;
-  }
-}
-
-/* Lettre d'amour sur carte — mobile-first, plus large sur desktop */
-.hero__letter {
-  position: relative;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
-  padding: 1.25rem 1.35rem 1.2rem;
-  max-width: min(42rem, 92vw);
-  width: 100%;
-  background: linear-gradient(135deg, #fffdfb, var(--bg-card));
-  border-radius: 0.9rem;
-  border: 1px solid var(--accent-soft);
-  box-shadow: 0 10px 30px rgba(184, 92, 108, 0.17), var(--shadow-glow);
-  text-align: left;
-  overflow-wrap: break-word;
+  font-style: italic;
+  text-align: center;
 }
 
 @media (min-width: 640px) {
-  .hero__letter {
-    padding: 1.5rem 1.75rem 1.4rem;
-    max-width: min(var(--max-width), 94vw);
+  .hero__note {
+    max-width: 44ch;
+    font-size: 1.05rem;
   }
 }
 
-@media (min-width: 1024px) {
-  .hero__letter {
-    max-width: var(--max-width);
-  }
+/* Animations — enveloppe LoveEnvelope style */
+@keyframes float-heart {
+  0%, 100% { transform: translateY(0) rotate(-5deg); opacity: 0.12; }
+  50% { transform: translateY(-30px) rotate(5deg); opacity: 0.2; }
+}
+
+@keyframes sparkle-pop {
+  0% { transform: scale(0) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.3) rotate(180deg); opacity: 0.8; }
+  100% { transform: scale(0) rotate(360deg); opacity: 0; }
+}
+
+@keyframes letter-fade-in {
+  0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes gentle-breathe {
+  0%, 100% { box-shadow: 0 8px 32px rgba(184, 92, 108, 0.15), 0 0 0 0 rgba(232, 117, 138, 0); }
+  50% { box-shadow: 0 12px 40px rgba(184, 92, 108, 0.25), 0 0 40px 4px rgba(232, 117, 138, 0.08); }
+}
+
+/* Enveloppe LoveEnvelope style — mobile-first */
+.hero--envelope-scene .hero__envelope {
+  touch-action: none;
+}
+
+.hero__envelope--love {
+  position: relative;
+  margin-top: 1.75rem;
+  width: 100%;
+  min-height: 22rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 @media (min-width: 768px) {
-  .hero__letter {
-    padding: 1.75rem 1.9rem 1.6rem;
+  .hero__envelope--love {
+    min-height: 26rem;
   }
 }
 
-/* Lettre issue de l'enveloppe : invisible tant qu'on n'a pas ouvert */
-.hero__letter--from-envelope {
+.envelope__bg-hearts {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) scale(0.65);
-  opacity: 0;
-  visibility: hidden;
-  transition: transform 0.8s var(--ease-out), opacity 0.5s var(--ease-out), visibility 0s linear 0.5s;
+  inset: 0;
   pointer-events: none;
+  overflow: hidden;
+}
+
+.envelope__bg-heart {
+  position: absolute;
+  top: 20%;
+  color: #d4838f;
+  animation: float-heart 6s ease-in-out infinite;
+}
+
+.envelope__sparkle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 100;
+  animation: sparkle-pop ease-out both;
+}
+
+.envelope__wrapper {
+  position: relative;
+  width: min(300px, 88vw);
+  height: 254px;
+  cursor: pointer;
+  perspective: 800px;
+  z-index: 10;
+  touch-action: none;
+  user-select: none;
+}
+
+.envelope__seal-glow {
+  position: absolute;
+  top: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 117, 138, 0.25) 0%, transparent 70%);
+  transition: opacity 0.5s;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.envelope__letter-preview {
+  position: absolute;
+  bottom: 28px;
+  left: 10%;
+  right: 10%;
+  height: 161px;
+  transition: transform 0.4s var(--ease-out), opacity 0.3s;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.envelope__letter-paper {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #fffdf9 0%, #fef8f2 100%);
+  border-radius: 8px 8px 4px 4px;
+  border: 1px solid rgba(184, 92, 108, 0.1);
+  box-shadow: 0 -4px 16px rgba(184, 92, 108, 0.08);
+  padding: 16px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.letter__watermark--preview {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  font-size: 48px;
+  color: rgba(232, 117, 138, 0.06);
+}
+
+.envelope__letter-preview-text {
+  font-family: var(--font-script);
+  font-size: 11px;
+  color: #8b5e6b;
+  line-height: 1.6;
+  margin: 0;
+  opacity: 0.7;
+}
+
+.envelope__body-new {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 190px;
+  border-radius: 6px 6px 14px 14px;
+  background: linear-gradient(170deg, #fdf5f7 0%, #f8e1e6 40%, #f2d0d8 100%);
+  border: 1px solid rgba(184, 92, 108, 0.15);
+  box-shadow: 0 8px 32px rgba(184, 92, 108, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  overflow: hidden;
+  animation: gentle-breathe 4s ease-in-out infinite;
   z-index: 2;
 }
 
-.hero__envelope--closed .hero__letter--from-envelope,
-.hero__envelope--opening .hero__letter--from-envelope {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.hero__envelope--unfolded .hero__letter--from-envelope,
-.hero__envelope--reading .hero__letter--from-envelope {
-  top: 0;
-  transform: translate(-50%, 0) scale(1);
-  opacity: 1;
-  visibility: visible;
-  transition: transform 0.8s var(--ease-out), opacity 0.5s var(--ease-out), visibility 0s linear 0s;
-  pointer-events: auto;
-}
-
-.hero__letter::before {
-  content: '';
+.envelope__body-inner {
   position: absolute;
-  inset: 0.35rem 0.4rem;
-  border-radius: 0.7rem;
-  border: 1px dashed var(--accent-line);
+  inset: 8px;
+  border-radius: 4px 4px 10px 10px;
+  background: linear-gradient(180deg, rgba(255, 251, 249, 0.6) 0%, rgba(255, 251, 249, 0.2) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   pointer-events: none;
 }
 
-.hero__letter-text {
+.envelope__body-border {
+  position: absolute;
+  inset: 3px;
+  border-radius: 4px 4px 12px 12px;
+  border: 1.5px dashed rgba(184, 92, 108, 0.1);
+  pointer-events: none;
+}
+
+.envelope__fold-lines {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.envelope__flap-new {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  transform-origin: bottom center;
+  transform-style: preserve-3d;
+  transition: transform 0.4s var(--ease-out);
+  z-index: 5;
+}
+
+.envelope__flap-front {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #f5dce3 0%, #f0c9d3 100%);
+  clip-path: polygon(0 100%, 50% 8%, 100% 100%);
+  backface-visibility: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 10px;
+  filter: drop-shadow(0 2px 6px rgba(136, 52, 72, 0.12));
+}
+
+.envelope__flap-back {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #f8e8ec 0%, #fdf2f4 100%);
+  clip-path: polygon(0 100%, 50% 8%, 100% 100%);
+  backface-visibility: hidden;
+  transform: rotateX(180deg);
+}
+
+.envelope__wax-seal {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #e8758a 0%, #c94e65 50%, #a33d52 100%);
+  box-shadow: 0 3px 10px rgba(163, 61, 82, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.envelope__seal-heart {
+  font-size: 18px;
+  color: #fde8ec;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.envelope__wrapper:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.envelope__hint {
+  position: absolute;
+  bottom: -36px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  color: var(--accent-sharp);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  transition: opacity 0.6s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-title);
+  font-weight: 600;
+}
+
+.envelope__hint-arrow {
+  display: inline-block;
+  animation: float-heart 2s ease-in-out infinite;
+  font-size: 16px;
+}
+
+.envelope__hint--continue {
+  opacity: 1;
+}
+
+/* Overlay lettre complète */
+.letter__overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(253, 246, 240, 0.92);
+  backdrop-filter: blur(12px);
+  z-index: 50;
+  padding: 24px;
+  animation: letter-fade-in 0.8s var(--ease-out) both;
+}
+
+.letter__overlay-content {
+  position: relative;
+  max-width: 380px;
+  width: 90%;
+  background: linear-gradient(180deg, #fffefb 0%, #fef8f2 50%, #fdf5ef 100%);
+  border-radius: 16px;
+  padding: 48px 36px;
+  box-shadow: 0 20px 60px rgba(184, 92, 108, 0.12), 0 0 0 1px rgba(184, 92, 108, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+}
+
+.letter__watermark--overlay {
+  position: absolute;
+  right: -10px;
+  bottom: -20px;
+  font-size: 140px;
+  color: rgba(232, 117, 138, 0.04);
+  line-height: 1;
+}
+
+.letter__watermark {
+  pointer-events: none;
+}
+
+.letter__decor-top,
+.letter__decor-bottom {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(184, 92, 108, 0.3), transparent);
+  border-radius: 1px;
+  margin: 0 auto;
+}
+
+.letter__decor-top {
+  margin-bottom: 28px;
+}
+
+.letter__decor-bottom {
+  margin-top: 28px;
+}
+
+.letter__full-text {
+  font-family: var(--font-script);
+  font-size: 15px;
+  line-height: 2;
+  color: #5a3440;
+  margin: 0;
+  text-align: center;
   position: relative;
   z-index: 1;
-  font-family: var(--font-script);
-  font-size: 0.9rem;
-  line-height: 1.8;
-  color: #3e2529;
-  white-space: normal;
 }
 
-.hero__letter-line {
+.letter__line {
   display: block;
   opacity: 0;
   transform: translateY(0.35rem);
-  will-change: opacity, transform;
-  animation: none;
+  animation: hero-letter-line-in 0.7s var(--ease-out) forwards;
 }
 
-.hero__letter-line--empty {
+.letter__line--empty {
   line-height: 1.4;
 }
 
-/* Délais progressifs pour l'apparition ligne par ligne (un peu plus lents) */
-.hero__letter--reading .hero__letter-line {
-  animation: hero-letter-line-in 0.7s var(--ease-out) forwards;
+.letter__overlay--reading .letter__line:nth-child(1) { animation-delay: 0.3s; }
+.letter__overlay--reading .letter__line:nth-child(2) { animation-delay: 0.9s; }
+.letter__overlay--reading .letter__line:nth-child(3) { animation-delay: 1.5s; }
+.letter__overlay--reading .letter__line:nth-child(4) { animation-delay: 2.1s; }
+.letter__overlay--reading .letter__line:nth-child(5) { animation-delay: 2.7s; }
+.letter__overlay--reading .letter__line:nth-child(6) { animation-delay: 3.3s; }
+.letter__overlay--reading .letter__line:nth-child(7) { animation-delay: 3.9s; }
+.letter__overlay--reading .letter__line:nth-child(8) { animation-delay: 4.5s; }
+.letter__overlay--reading .letter__line:nth-child(9) { animation-delay: 5.1s; }
+.letter__overlay--reading .letter__line:nth-child(10) { animation-delay: 5.7s; }
+.letter__overlay--reading .letter__line:nth-child(11) { animation-delay: 6.3s; }
+.letter__overlay--reading .letter__line:nth-child(12) { animation-delay: 6.9s; }
+.letter__overlay--reading .letter__line:nth-child(13) { animation-delay: 7.5s; }
+.letter__overlay--reading .letter__line:nth-child(14) { animation-delay: 8.1s; }
+.letter__overlay--reading .letter__line:nth-child(15) { animation-delay: 8.7s; }
+.letter__overlay--reading .letter__line:nth-child(16) { animation-delay: 9.3s; }
+.letter__overlay--reading .letter__line:nth-child(n+17) { animation-delay: 9.9s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .letter__line,
+  .letter__signature {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }
-.hero__letter--reading .hero__letter-line:nth-child(1) { animation-delay: 0.6s; }
-.hero__letter--reading .hero__letter-line:nth-child(2) { animation-delay: 1.2s; }
-.hero__letter--reading .hero__letter-line:nth-child(3) { animation-delay: 1.8s; }
-.hero__letter--reading .hero__letter-line:nth-child(4) { animation-delay: 2.4s; }
-.hero__letter--reading .hero__letter-line:nth-child(5) { animation-delay: 3s; }
-.hero__letter--reading .hero__letter-line:nth-child(6) { animation-delay: 3.6s; }
-.hero__letter--reading .hero__letter-line:nth-child(7) { animation-delay: 4.2s; }
-.hero__letter--reading .hero__letter-line:nth-child(8) { animation-delay: 4.8s; }
-.hero__letter--reading .hero__letter-line:nth-child(9) { animation-delay: 5.4s; }
-.hero__letter--reading .hero__letter-line:nth-child(10) { animation-delay: 6s; }
-.hero__letter--reading .hero__letter-line:nth-child(11) { animation-delay: 6.6s; }
-.hero__letter--reading .hero__letter-line:nth-child(12) { animation-delay: 7.2s; }
-.hero__letter--reading .hero__letter-line:nth-child(13) { animation-delay: 7.8s; }
-.hero__letter--reading .hero__letter-line:nth-child(14) { animation-delay: 8.4s; }
-.hero__letter--reading .hero__letter-line:nth-child(15) { animation-delay: 9s; }
+
+.letter__signature {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-title);
+  font-size: 1rem;
+  color: var(--accent-sharp);
+  text-align: right;
+  opacity: 0;
+  animation: hero-letter-line-in 0.7s var(--ease-out) forwards;
+  animation-delay: 10s;
+}
+
+.letter__slide-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: var(--accent-sharp);
+  letter-spacing: 0.03em;
+  font-family: var(--font-title);
+  font-weight: 600;
+  animation: letter-slide-hint-in 0.5s var(--ease-out) both;
+}
+
+.letter__slide-hint-arrow {
+  font-size: 1.2rem;
+  animation: float-heart 2s ease-in-out infinite;
+}
 
 @keyframes hero-letter-line-in {
   from {
@@ -480,11 +667,79 @@ body::after {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero__envelope {
-    display: none;
+@keyframes letter-slide-hint-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+.letter__close-btn {
+  display: block;
+  width: 100%;
+  margin-top: 24px;
+  padding: 0.6rem 1rem;
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-sharp);
+  background: transparent;
+  border: 1px solid rgba(184, 92, 108, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.letter__close-btn:hover,
+.letter__close-btn:focus-visible {
+  background: rgba(184, 92, 108, 0.08);
+  border-color: var(--accent-sharp);
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Lettre mode reduced-motion */
+.hero__letter--reduced {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding: 48px 36px;
+  max-width: min(380px, 92vw);
+  width: 100%;
+  background: linear-gradient(180deg, #fffefb 0%, #fef8f2 50%, #fdf5ef 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(184, 92, 108, 0.06);
+  box-shadow: 0 20px 60px rgba(184, 92, 108, 0.12), 0 0 0 1px rgba(184, 92, 108, 0.06);
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.hero__letter-text {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-script);
+  font-size: 15px;
+  line-height: 2;
+  color: #5a3440;
+  white-space: pre-wrap;
+}
+
+.hero__letter-line {
+  display: block;
+}
+
+.hero__letter-line--empty {
+  line-height: 1.4;
+}
+
+@media (prefers-reduced-motion: reduce) {
   .hero__letter-line {
     opacity: 1;
     transform: none;
