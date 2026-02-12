@@ -2,7 +2,7 @@ export const menuItems = [
   {
     id: '1',
     category: 'entrée',
-    name: "Croustillants de mozzarella, réduction tomate-balsamique à l'ancienne",
+    name: 'Sigara Böreği (croustillants au fromage façon turque)',
   },
   {
     id: '2',

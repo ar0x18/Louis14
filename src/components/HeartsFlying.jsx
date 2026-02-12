@@ -3,12 +3,12 @@
 const HEART_PATH =
   "M32 52C32 52 12 36 12 24c0-8 6-12 12-12 6 0 8 4 8 4s2-4 8-4c6 0 12 4 12 12 0 12-20 28-20 28z";
 
-/* Nuances de rose pour les cœurs */
+/* Palette DA : rose poudré, rose vif, bordeaux, touches d'or */
 const PINK_COLORS = [
-  "#ffb3c6", "#ff9ebb", "#ff85b3", "#ff6b9d", "#e8758a", "#e0607a",
-  "#d84a6a", "#c93a5c", "#b85c6c", "#a64d5c", "#f5c6d6", "#f0a5bc",
-  "#eba3b8", "#e8d4d8", "#fce4ec", "#f8bbd9", "#f48fb1", "#ec407a",
-  "#d81b60", "#ad1457", "#880e4f", "#ffc0cb", "#ff69b4", "#ff1493",
+  "#FFB6C1", "#FF69B4", "#8B0035", "#D4AF37", "#ffc0cb", "#ff9ebb",
+  "#ff85b3", "#a6395c", "#c94e6e", "#e8758a", "#f5c6d6", "#f0a5bc",
+  "#ffdfe6", "#ffe4eb", "#ff1493", "#b85c6c", "#d4af37", "#e8c547",
+  "#ffb6c1", "#ff69b4", "#8b0035", "#fff5f5", "#ffc9d8", "#ffdfe6",
 ];
 
 /* Cœurs : left %, size px, delay s, color — beaucoup plus nombreux, toutes tailles, tous roses */

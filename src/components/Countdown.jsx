@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import HeartIcon from './HeartIcon'
 
 const TARGET = new Date('2026-03-31T00:00:00')
 
@@ -54,20 +55,24 @@ export default function Countdown() {
       <div className="countdown__grid" role="timer">
         <div className="countdown__cell">
           <span className="countdown__value-wrap"><span className="countdown__value">{days}</span></span>
+          <HeartIcon className="countdown__cell-heart" size={18} />
           <span className="countdown__label">Jours</span>
         </div>
         <div className="countdown__cell">
           <span className="countdown__value-wrap"><span className="countdown__value">{pad(hours)}</span></span>
+          <HeartIcon className="countdown__cell-heart" size={18} />
           <span className="countdown__label">Heures</span>
         </div>
         <div className="countdown__cell">
           <span className="countdown__value-wrap"><span className="countdown__value">{pad(minutes)}</span></span>
+          <HeartIcon className="countdown__cell-heart" size={18} />
           <span className="countdown__label">Minutes</span>
         </div>
         <div className="countdown__cell countdown__cell--seconds">
           <span className="countdown__value-wrap" key={seconds}>
             <span className="countdown__value">{pad(seconds)}</span>
           </span>
+          <HeartIcon className="countdown__cell-heart countdown__cell-heart--seconds" size={18} />
           <span className="countdown__label">Secondes</span>
         </div>
       </div>

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { hero } from '../data/copy'
+import HeartIcon from './HeartIcon'
+import SparkleIcon from './SparkleIcon'
 
 const PHASES = { CLOSED: 'closed', OPENING: 'opening', OPEN: 'open' }
 const SWIPE_THRESHOLD = 60
@@ -245,7 +247,9 @@ export default function Hero() {
             .filter(Boolean)
             .join(' ')}
         >
-          <div className="letter__watermark" aria-hidden="true">♥</div>
+          <div className="letter__watermark" aria-hidden="true">
+            <HeartIcon className="letter__watermark-icon" size={140} />
+          </div>
           <div className="letter__decor-top" />
           <p className="hero__letter-text">
             {lines.map((line, index) =>
@@ -297,7 +301,7 @@ export default function Hero() {
                 opacity: 0.12 + (i % 3) * 0.04,
               }}
             >
-              ♥
+              <HeartIcon className="envelope__bg-heart-icon" size={14 + (i % 3) * 6} />
             </span>
           ))}
         </div>
@@ -309,13 +313,18 @@ export default function Hero() {
             style={{
               left: `${s.x}%`,
               top: `${s.y}%`,
-              fontSize: `${s.size}px`,
-              color: s.type === 'heart' ? '#e8758a' : '#f4c76b',
+              width: `${s.size}px`,
+              height: `${s.size}px`,
+              color: s.type === 'heart' ? '#FF69B4' : '#D4AF37',
               animationDelay: `${s.delay}s`,
               animationDuration: `${s.duration}s`,
             }}
           >
-            {s.type === 'heart' ? '♥' : '✦'}
+            {s.type === 'heart' ? (
+              <HeartIcon className="sparkle-icon" size={s.size} />
+            ) : (
+              <SparkleIcon className="sparkle-icon" size={s.size} />
+            )}
           </span>
         ))}
 
@@ -343,7 +352,9 @@ export default function Hero() {
             }}
           >
             <div className="envelope__letter-paper">
-              <div className="letter__watermark letter__watermark--preview">♥</div>
+              <div className="letter__watermark letter__watermark--preview">
+                <HeartIcon className="letter__watermark-icon letter__watermark--preview-icon" size={48} />
+              </div>
               <p className="envelope__letter-preview-text">{letterPreview}</p>
             </div>
           </div>
@@ -379,7 +390,7 @@ export default function Hero() {
                   transform: `scale(${1 - flapOpenRatio * 0.3})`,
                 }}
               >
-                <span className="envelope__seal-heart">♥</span>
+                <span className="envelope__seal-heart"><HeartIcon size={18} className="envelope__seal-heart-icon" /></span>
               </div>
             </div>
             <div className="envelope__flap-back" />
@@ -412,7 +423,9 @@ export default function Hero() {
           style={{ touchAction: 'none' }}
         >
           <div className="letter__overlay-content" onClick={(e) => e.stopPropagation()}>
-            <div className="letter__watermark letter__watermark--overlay">♥</div>
+            <div className="letter__watermark letter__watermark--overlay">
+              <HeartIcon className="letter__watermark-icon letter__watermark--overlay-icon" size={140} />
+            </div>
             <div className="letter__decor-top" />
             <p className="letter__full-text">
               {lines.map((line, index) =>
