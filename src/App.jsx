@@ -36,6 +36,8 @@ function HeroSection() {
           <span className="hero__scroll-arrow">↓</span>
         </div>
       </div>
+      {/* Transition bridge → light */}
+      <div className="section-bridge section-bridge--to-light" aria-hidden="true" />
     </section>
   )
 }
@@ -90,6 +92,9 @@ function EnvelopeSection() {
 
   return (
     <section className="section section--envelope">
+      {/* Point 2 : texte d'accroche avant l'enveloppe */}
+      <p className="envelope-intro">J'ai quelque chose pour toi…</p>
+
       <div className="envelope-scene">
         {/* Floating particles */}
         <div className="envelope-particles" aria-hidden="true">
@@ -180,12 +185,16 @@ function EnvelopeSection() {
           <div className="letter-paper__decor-bottom" />
         </div>
       </div>
+
+      {/* Transition bridge → dark (countdown) */}
+      <div className="section-bridge section-bridge--to-dark" aria-hidden="true" />
     </section>
   )
 }
 
 /* ────────────────────────────────────────────
    SECTION 3 — COUNTDOWN CINÉMATIQUE
+   Point 8 : texte émotionnel au lieu de factuel
    ──────────────────────────────────────────── */
 const TARGET = new Date('2026-03-31T00:00:00')
 
@@ -225,7 +234,7 @@ function CountdownSection() {
       <section className="section section--countdown" ref={ref}>
         <div className={`countdown-content ${visible ? 'countdown-content--visible' : ''}`}>
           <h2 className="countdown__title">C'est le grand jour</h2>
-          <p className="countdown__subtitle">Enfin chez nous. ♥</p>
+          <p className="countdown__subtitle">Plus jamais de « bonne nuit » par snap...</p>
         </div>
       </section>
     )
@@ -253,14 +262,18 @@ function CountdownSection() {
             </div>
           ))}
         </div>
-        <p className="countdown__target">jusqu'au <strong>31 mars 2026</strong> — notre emménagement</p>
+        <p className="countdown__target">avant le <strong>31 mars 2026</strong></p>
+        <p className="countdown__emotional">Plus jamais de « bonne nuit » par snap...</p>
       </div>
+      {/* Transition bridge → light (menu) */}
+      <div className="section-bridge section-bridge--to-light" aria-hidden="true" />
     </section>
   )
 }
 
 /* ────────────────────────────────────────────
    SECTION 4 — MENU DU SOIR
+   Point 3 : descriptions sensorielles
    ──────────────────────────────────────────── */
 const categoryLabels = { 'entrée': 'Entrée', 'plat': 'Plat', 'dessert': 'Dessert' }
 
@@ -294,16 +307,27 @@ function MenuSection() {
           ))}
         </div>
       </div>
+      {/* Transition bridge → dark (photo) */}
+      <div className="section-bridge section-bridge--to-dark" aria-hidden="true" />
     </section>
   )
 }
 
 /* ────────────────────────────────────────────
    SECTION 5 — PHOTO FINALE
+   Point 4 : message de clôture dynamique
    ──────────────────────────────────────────── */
 function PhotoSection() {
   const [visible, setVisible] = useState(false)
+  const [daysLeft, setDaysLeft] = useState(null)
   const ref = useRef(null)
+
+  useEffect(() => {
+    const diff = TARGET - new Date()
+    if (diff > 0) {
+      setDaysLeft(Math.floor(diff / (1000 * 60 * 60 * 24)))
+    }
+  }, [])
 
   useEffect(() => {
     const el = ref.current
@@ -328,6 +352,12 @@ function PhotoSection() {
             loading="lazy"
           />
         </div>
+        <p className="photo__closing">
+          {daysLeft !== null
+            ? `Dans ${daysLeft} jours, plus jamais séparés.`
+            : 'Enfin ensemble, pour de vrai.'
+          }
+        </p>
         <p className="photo__footer">Je t'aime ♥</p>
       </div>
     </section>
